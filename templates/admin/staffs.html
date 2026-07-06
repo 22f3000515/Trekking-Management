@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Manage Staff</h2>
+    <hr>
+    <!-- Search Staff -->
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Search Staff Name or Email"
+               value="{{ request.args.get('search', '') }}">
+            <button class="btn btn-primary" type="submit">
+                Search
+            </button>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Blacklist Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for staff in staffs %}
+            <tr>
+                <td>{{ staff.id }}</td>
+                <td>{{ staff.name }}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.status }}</td>
+
+                <!-- Blacklist Status -->
+                <td>
+                    {% if staff.is_blacklisted %}
+                        <span class="badge bg-danger">Blacklisted</span>
+                    {% else %}
+                        Active
+                    {% endif %}
+                </td>
+
+                <!-- Actions -->
+                <td>
+
+                    <!-- Approve Button -->
+                    {% if staff.status == 'pending' %}
+                    <form method="POST"
+                          action="{{ url_for('admin.approve_staff', staff_id=staff.id) }}"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            Approve
+                        </button>
+                    </form>
+                    {% else %}
+                        <span class="badge bg-success">Approved</span>
+                    {% endif %}
+
+                    <!-- Blacklist Button -->
+                    {% if not staff.is_blacklisted %}
+                    <form method="POST"
+                          action="{{ url_for('admin.blacklist_staff', staff_id=staff.id) }}"
+                          style="display:inline;">
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Blacklist this staff?');">
+                            Blacklist
+                        </button>
+                    </form>
+                    {% endif %}
+
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">
+                    No staff found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Manage Users</h2>
+    <hr>
+
+    <!---- Search Users -->
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Search User Name or Email"
+               value="{{ request.args.get('search', '') }}">
+            <button class="btn btn-primary" type="submit">
+               Search
+            </button>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+
+                <td>
+                    {% if user.is_blacklisted %}
+                        Blocked
+                    {% else %}
+                        {{ user.status }}
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if not user.is_blacklisted %}
+                    <form method="POST"
+                          action="{{ url_for('admin.block_user', user_id=user.id) }}"
+                          style="display:inline">
+
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Block
+                        </button>
+                    </form>
+                    {% else %}
+                        Blocked
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    No users found
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- STEP 1: Main Container -->
+<div class="container mt-4">
+
+    <!-- STEP 2: Page Heading -->
+    <h2>Edit Trek — {{ trek.name }}</h2>
+    <hr>
+
+    <!-- STEP 3: Edit Form -->
+    <form method="POST">
+
+        <!-- STEP 3.1: Trek Name -->
+        <label class="form-label">Trek Name</label>
+        <input type="text" name="name"
+               value="{{ trek.name }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.2: Location -->
+        <label class="form-label">Location</label>
+        <input type="text" name="location"
+               value="{{ trek.location }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.3: Country -->
+        <label class="form-label">Country</label>
+        <input type="text" name="country"
+               value="{{ trek.country }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.4: Category -->
+        <label class="form-label">Category</label>
+        <select name="category" class="form-control mb-3" required>
+            <option value="Snow" {{ 'selected' if trek.category == 'Snow' }}>Snow</option>
+            <option value="Forest" {{ 'selected' if trek.category == 'Forest' }}>Forest</option>
+            <option value="Mountain" {{ 'selected' if trek.category == 'Mountain' }}>Mountain</option>
+            <option value="Desert" {{ 'selected' if trek.category == 'Desert' }}>Desert</option>
+        </select>
+
+        <!-- STEP 3.5: Difficulty -->
+        <label class="form-label">Difficulty</label>
+        <select name="difficulty" class="form-control mb-3" required>
+            <option value="Easy" {{ 'selected' if trek.difficulty == 'Easy' }}>Easy</option>
+            <option value="Moderate" {{ 'selected' if trek.difficulty == 'Moderate' }}>Moderate</option>
+            <option value="Hard" {{ 'selected' if trek.difficulty == 'Hard' }}>Hard</option>
+        </select>
+
+        <!-- STEP 3.6: Duration -->
+        <label class="form-label">Duration (Days)</label>
+        <input type="number" name="duration_days"
+               value="{{ trek.duration_days }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.7: Price -->
+        <label class="form-label">Price (₹)</label>
+        <input type="number" name="price"
+               value="{{ trek.price }}"
+               step="0.01"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.8: Total Slots -->
+        <label class="form-label">Total Slots</label>
+        <input type="number" name="total_slots"
+               value="{{ trek.total_slots }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.9: Available Slots -->
+        <label class="form-label">Available Slots</label>
+        <input type="number" name="available_slots"
+               value="{{ trek.available_slots }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.10: Status -->
+        <label class="form-label">Status</label>
+        <select name="status" class="form-control mb-3" required>
+            <option value="Pending" {{ 'selected' if trek.status == 'Pending' }}>Pending</option>
+            <option value="Open" {{ 'selected' if trek.status == 'Open' }}>Open</option>
+            <option value="Closed" {{ 'selected' if trek.status == 'Closed' }}>Closed</option>
+            <option value="Completed" {{ 'selected' if trek.status == 'Completed' }}>Completed</option>
+        </select>
+
+        <!-- STEP 3.11: Best Season -->
+        <label class="form-label">Best Season</label>
+        <select name="best_season" class="form-control mb-3">
+            <option value="Summer" {{ 'selected' if trek.best_season == 'Summer' }}>Summer</option>
+            <option value="Winter" {{ 'selected' if trek.best_season == 'Winter' }}>Winter</option>
+            <option value="Monsoon" {{ 'selected' if trek.best_season == 'Monsoon' }}>Monsoon</option>
+            <option value="Spring" {{ 'selected' if trek.best_season == 'Spring' }}>Spring</option>
+            <option value="All Year Round" {{ 'selected' if trek.best_season == 'All Year Round' }}>All Year Round</option>
+        </select>
+
+        <!-- STEP 3.12: National / International -->
+        <label class="form-label">National / International</label>
+        <select name="is_international" class="form-control mb-3">
+            <option value="false" {{ 'selected' if not trek.is_international }}>National (India)</option>
+            <option value="true" {{ 'selected' if trek.is_international }}>International</option>
+        </select>
+
+        <!-- STEP 3.13: Start Date -->
+        <label class="form-label">Start Date</label>
+        <input type="date" name="start_date"
+               value="{{ trek.start_date.strftime('%Y-%m-%d') }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.14: End Date -->
+        <label class="form-label">End Date</label>
+        <input type="date" name="end_date"
+               value="{{ trek.end_date.strftime('%Y-%m-%d') }}"
+               class="form-control mb-3" required>
+
+        <!-- STEP 3.15: Description -->
+        <label class="form-label">Description</label>
+        <textarea name="description"
+                  class="form-control mb-3"
+                  rows="3">{{ trek.description }}</textarea>
+
+        <!-- STEP 4: Buttons -->
+        <button type="submit" class="btn btn-success">
+            Update Trek
+        </button>
+
+        <a href="{{ url_for('admin.manage_treks') }}"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>All Bookings</h2>
+    <hr>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User ID</th>
+                <th>Trek ID</th>
+                <th>Booking Date</th>
+                <th>Participants</th>
+                <th>Status</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.user_id }}</td>
+                <td>{{ booking.trek_id }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.participants_count }}</td>
+                <td>{{ booking.status }}</td>
+                <td>₹ {{ booking.total_price }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">
+                    No bookings found
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

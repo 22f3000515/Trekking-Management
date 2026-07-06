@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- STEP 1: Main Container -->
+<div class="container mt-4">
+
+    <!-- STEP 2: Page Heading -->
+    <h2>Manage Treks</h2>
+    <hr>
+
+    <!-- STEP 3: Add Trek Form -->
+    <h4>Add New Trek</h4>
+
+    <form method="POST">
+
+        <!-- Trek Name -->
+        <input type="text" name="name" class="form-control mb-3"
+               placeholder="Trek Name" required>
+
+        <!-- Location -->
+        <input type="text" name="location" class="form-control mb-3"
+               placeholder="Location" required>
+
+        <!-- Country -->
+        <input type="text" name="country" class="form-control mb-3"
+               placeholder="Country" required>
+
+        <!-- Category -->
+        <select name="category" class="form-control mb-3" required>
+            <option value="">Select Category</option>
+            <option value="Snow">Snow</option>
+            <option value="Forest">Forest</option>
+            <option value="Mountain">Mountain</option>
+            <option value="Desert">Desert</option>
+        </select>
+
+        <!-- Difficulty -->
+        <select name="difficulty" class="form-control mb-3" required>
+            <option value="">Select Difficulty</option>
+            <option value="Easy">Easy</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Hard">Hard</option>
+        </select>
+
+        <!-- Duration -->
+        <input type="number" name="duration_days" class="form-control mb-3"
+               placeholder="Duration (Days)" required>
+
+        <!-- Price -->
+        <input type="number" name="price" class="form-control mb-3"
+               placeholder="Price (₹)" step="0.01" required>
+
+        <!-- Total Slots -->
+        <input type="number" name="total_slots" class="form-control mb-3"
+               placeholder="Total Slots" required>
+
+        <!-- Best Season -->
+        <select name="best_season" class="form-control mb-3">
+            <option value="">Select Best Season</option>
+            <option value="Summer">Summer</option>
+            <option value="Winter">Winter</option>
+            <option value="Monsoon">Monsoon</option>
+            <option value="Spring">Spring</option>
+            <option value="All Year Round">All Year Round</option>
+        </select>
+
+        <!-- National / International -->
+        <select name="is_international" class="form-control mb-3">
+            <option value="false">National (India)</option>
+            <option value="true">International</option>
+        </select>
+
+        <!-- Description -->
+        <textarea name="description" class="form-control mb-3"
+                  placeholder="Trek Description" rows="3"></textarea>
+
+        <!-- Start Date -->
+        <input type="date" name="start_date" class="form-control mb-3" required>
+
+        <!-- End Date -->
+        <input type="date" name="end_date" class="form-control mb-3" required>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-success">
+            Add Trek
+        </button>
+    </form>
+
+    <hr class="my-5">
+    <!-- STEP 17: Search Treks -->
+    <form method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text"
+               name="search"
+               class="form-control"
+               placeholder="Search Trek Name or Location"
+               value="{{ request.args.get('search', '') }}">
+            <button class="btn btn-primary" type="submit">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <!-- STEP 4: Trek List -->
+    <h4>All Treks</h4>
+
+    <table class="table table-bordered table-striped mt-3">
+
+        <!-- STEP 5: Table Header -->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Slots</th>
+                <th>Price</th>
+                <th>Start Date</th>
+                <th>Status</th>
+                <th>Assigned Staff</th>
+                <th>Assign Staff</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <!-- STEP 6: Table Body -->
+        <tbody>
+
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration_days }}</td>
+                <td>{{ trek.available_slots }}/{{ trek.total_slots }}</td>
+                <td>₹{{ trek.price }}</td>
+                <td>{{ trek.start_date.strftime('%d-%m-%Y') }}</td>
+                <td>{{ trek.status }}</td>
+
+                <!-- STEP 7: Assigned Staff -->
+                <td>
+                    {% if trek.assigned_staff %}
+                        {{ trek.assigned_staff.name }}
+                    {% else %}
+                        Not Assigned
+                    {% endif %}
+                </td>
+                 <!-- STEP 8: Assign Staff -->
+                <td>
+                   {% if trek.assigned_staff %}
+
+                    <strong>{{ trek.assigned_staff.name }}</strong>
+                    <br>
+
+                    <span class="badge bg-success mb-2">
+                        Assigned
+                    </span>
+                    <br>
+
+                    <form method="POST"
+                       action="{{ url_for('admin.unassign_staff', trek_id=trek.id) }}">
+
+                       <button type="submit"
+                           class="btn btn-warning btn-sm"
+                           onclick="return confirm('Unassign this staff from the trek?');">
+                           Unassign
+                        </button>
+
+                    </form>
+
+                   {% else %}
+
+                      <span class="badge bg-secondary">Not Assigned</span>
+                      <br>
+                        <form method="POST"
+                                action="{{ url_for('admin.assign_staff', trek_id=trek.id) }}">
+                            <select name="staff_id" class="form-control form-control-sm mb-2" required>
+                                <option value="">Select Staff</option>
+                                {% for staff in staffs %}
+                                    <option value="{{ staff.id }}">{{ staff.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit"
+                                    class="btn btn-primary btn-sm"
+                                    onclick="return confirm('Assign this staff to the trek?');">
+                                Assign
+                            </button>
+                        </form>
+                    {% endif %}   
+                </td>     
+                <!-- STEP 9: Actions -->
+                <td>
+                    <a href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
+                       class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+
+                    <form method="POST"
+                          action="{{ url_for('admin.delete_trek', trek_id=trek.id) }}"
+                          style="display:inline;">
+
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure?');">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            {% else %}
+            <tr>
+                <td colspan="12" class="text-center text-muted">
+                    No treks found. Add one above!
+                </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

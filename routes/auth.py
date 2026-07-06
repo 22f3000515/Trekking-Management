@@ -63,13 +63,19 @@ def login():
         if not check_password_hash(user.password, password):
             flash("Invalid email or password", "danger")
             return redirect(url_for('auth.login'))
+        
+        # STEP 3: Check blacklist
+        if user.is_blacklisted:
+            flash("Your account has been blocked by admin", "danger")
+            return redirect(url_for('auth.login'))
 
-        # Step 3: Staff approval check
+        # Step 4: Staff approval check
         if user.role == 'staff' and user.status != 'approved':
             flash("Waiting for admin approval", "warning")
             return redirect(url_for('auth.login'))
+        
 
-        # Step 4: Store session
+        # Step 5: Store session
         session['user_id'] = user.id
         session['user_name'] = user.name
         session['role'] = user.role

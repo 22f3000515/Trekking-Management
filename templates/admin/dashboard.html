@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Admin Dashboard</h2>
+    <p class="text-muted">Welcome, {{ session.get('user_name') }}</p>
+    <hr>
+
+    <div class="row mt-4">
+        <!-- STEP 1: Total Treks -->
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.manage_treks') }}"
+               style="text-decoration:none;">
+            <div class="card text-white bg-primary shadow text-center p-3">
+                <h5>Total Treks</h5>
+                <h2>{{ total_treks }}</h2>
+            </div>
+        </div>
+
+         <!-- STEP 2: Total Users -->
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.manage_users') }}"
+               style="text-decoration:none;">
+            <div class="card text-white bg-success shadow text-center p-3">
+                <h5>Total Users</h5>
+                <h2>{{ total_users }}</h2>
+            </div>
+        </div>
+
+        <!-- STEP 3: Total Staff -->
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.manage_staff') }}"
+               style="text-decoration:none;">
+            <div class="card text-white bg-warning shadow text-center p-3">
+                <h5>Total Staff</h5>
+                <h2>{{ total_staff }}</h2>
+            </div>
+        </div>
+
+         <!-- STEP 4: Total Bookings -->
+        <div class="col-md-3">
+            <a href="{{ url_for('admin.manage_bookings') }}"
+               style="text-decoration:none;">
+            <div class="card text-white bg-danger shadow text-center p-3">
+                <h5>Total Bookings</h5>
+                <h2>{{ total_bookings }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
