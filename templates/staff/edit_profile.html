@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- STEP 1 : Page Heading -->
+
+    <h2>Edit Profile</h2>
+    <hr>
+
+    <!-- STEP 2 : Edit Profile Card -->
+    
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            Update Your Profile
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <!-- Name (Read Only) -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        value="{{ staff.name }}"
+                        readonly>
+                </div>
+
+                <!-- Email (Read Only) -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control"
+                        value="{{ staff.email }}"
+                        readonly>
+                </div>
+
+                <!-- Phone -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        value="{{ staff.phone or '' }}"
+                        maxlength="15"
+                        placeholder="Enter phone number">
+                </div>
+
+                <!-- Experience -->
+                <div class="mb-3">
+                    <label class="form-label">
+                        Experience (Years)
+                    </label>
+
+                    <input
+                        type="number"
+                        name="experience"
+                        class="form-control"
+                        value="{{ staff.experience }}"
+                        min="0"
+                        placeholder="Experience in years">
+                </div>
+
+                <!-- Buttons -->
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    Save Changes
+
+                </button>
+
+                <a
+                    href="{{ url_for('staff.profile') }}"
+                    class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

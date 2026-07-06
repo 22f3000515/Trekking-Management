@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+  
+    <!-- STEP 1 : Page Heading -->
+    
+    <h2>Participants List</h2>
+    <p class="text-muted">
+        Trek :
+        <strong>{{ trek.name }}</strong>
+    </p>
+    <hr>
+   
+    <!-- STEP 2 : Total Participants -->
+   
+    <div class="alert alert-info">
+        <strong>Total Registered Participants :</strong>
+        {{ total_participants }}
+    </div>
+   
+    <!-- STEP 3 : Participants Table -->
+   
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Participants</th>
+                <th>Status</th>
+                <th>Booking Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.user.name }}</td>
+                <td>{{ booking.user.email }}</td>
+                <td>{{ booking.participants_count }}</td>
+                <td>{{ booking.status }}</td>
+                <td>
+                    {{ booking.booking_date.strftime('%d-%m-%Y') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6"
+                    class="text-center text-muted">
+                    No participants registered yet.
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <!-- STEP 4 : Back Button -->
+    
+    <a href="{{ url_for('staff.trek_details',
+                        trek_id=trek.id) }}"
+       class="btn btn-secondary">
+        Back to Trek
+    </a>
+</div>
+{% endblock %}

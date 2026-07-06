@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Staff Dashboard</h2>
+
+    <p class="text-muted">
+        Welcome,
+        <strong>{{ session.get('user_name') }}</strong>
+    </p>
+    <div class="mb-3">
+        <a href="{{ url_for('staff.profile') }}"
+              class="btn btn-secondary">
+                My Profile
+    </div>
+
+    <hr>
+
+
+    <!-- Dashboard Statistics -->
+    
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+            <div class="card bg-primary text-white shadow text-center">
+                <div class="card-body">
+                    <h5>Total Assigned Treks</h5>
+                    <h2>{{ total_assigned_treks }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card bg-success text-white shadow text-center">
+                <div class="card-body">
+                    <h5>Total Registered Trekkers</h5>
+                    <h2>{{ total_trekkers }}</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- Assigned Treks -->
+
+    <h4>My Assigned Treks</h4>
+
+    <table class="table table-bordered table-striped mt-3">
+
+        <!-- Table Header -->
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Available Slots</th>
+                <th>Start Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <!-- Table Body -->
+        <tbody>
+
+        {% for trek in assigned_treks %}
+
+            <tr>
+
+                <td>{{ trek.id }}</td>
+
+                <td>{{ trek.name }}</td>
+
+                <td>{{ trek.location }}</td>
+
+                <td>{{ trek.status }}</td>
+
+                <td>{{ trek.available_slots }}/{{ trek.total_slots }}</td>
+
+                <td>{{ trek.start_date.strftime('%d-%m-%Y') }}</td>
+
+                <td>
+
+                    <a href="{{ url_for('staff.trek_details', trek_id=trek.id) }}"
+                       class="btn btn-primary btn-sm">
+                        View Details
+                    </a>
+
+                    <a href="{{ url_for('staff.participants', trek_id=trek.id) }}"
+                       class="btn btn-success btn-sm">
+                        Participants
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+                <td colspan="7" class="text-center text-muted">
+                    No Trek Assigned Yet.
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

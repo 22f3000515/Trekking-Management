@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+
+    <!-- STEP 1 : Page Heading -->
+    
+    <h2>My Profile</h2>
+    <hr>
+
+    
+    <!-- STEP 2 : Profile Card -->
+   
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            Staff Information
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th width="30%">Name</th>
+                    <td>{{ staff.name }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ staff.email }}</td>
+                </tr>
+
+                <tr>
+                    <th>Phone</th>
+                    <td>{{ staff.phone }}</td>
+                </tr>
+
+                <tr>
+                    <th>Experience</th>
+                    <td>{{ staff.experience }} Years</td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+                    <td>{{ staff.status }}</td>
+                </tr>
+
+                <tr>
+                    <th>Role</th>
+                    <td>{{ staff.role|capitalize }}</td>
+                </tr>
+
+                <tr>
+                    <th>Joined On</th>
+                    <td>{{ staff.created_at.strftime('%d-%m-%Y') }}</td>
+                </tr>
+
+            </table>
+
+            <!-- STEP 3 : Buttons -->
+           >
+
+            <a href="{{ url_for('staff.edit_profile') }}"
+               class="btn btn-primary">
+
+                Edit Profile
+
+            </a>
+
+            <a href="{{ url_for('staff.dashboard') }}"
+               class="btn btn-secondary">
+
+                Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
