@@ -180,6 +180,20 @@ def edit_trek(trek_id):
             flash("End date cannot be before start date", "danger")
             return redirect(url_for('admin.edit_trek', trek_id=trek.id))
 
+        #db.session.commit()
+         #If trek is marked Completed,
+        # mark all active bookings as Completed
+        if trek.status == "Completed":
+            bookings = Booking.query.filter_by(
+                trek_id=trek.id,
+                status="Booked"
+            ).all()
+            print("TOTAL BOOKINGS =", len(bookings))
+
+            for booking in bookings:
+                print("Updating booking:", booking.id)
+                booking.status = "Completed"
+
         db.session.commit()
 
         flash("Trek updated successfully!", "success")
