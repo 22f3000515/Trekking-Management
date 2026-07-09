@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Browse Treks</h2>
+    <hr>
+
+    <!-- Search + Filter -->
+    <form method="GET" class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search Trek Name or Location"
+                value="{{ request.args.get('search','') }}">
+        </div>
+
+        <div class="col-md-3">
+            <select name="difficulty" class="form-select">
+
+                <option value="">All Difficulties</option>
+
+                {% for diff in difficulties %}
+
+                <option value="{{ diff }}"
+                    {% if request.args.get('difficulty') == diff %}
+                        selected
+                    {% endif %}>
+
+                    {{ diff }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="location" class="form-select">
+
+                <option value="">All Locations</option>
+
+                {% for loc in locations %}
+
+                <option value="{{ loc }}"
+                    {% if request.args.get('location') == loc %}
+                        selected
+                    {% endif %}>
+
+                    {{ loc }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+        </div>
+
+        <div class="col-md-2 d-grid">
+
+            <button class="btn btn-primary" type="submit">
+
+                Search
+
+            </button>
+
+        </div>
+
+        <div class="col-md-2 d-grid">
+
+            <a href="{{ url_for('user.browse_treks') }}"
+               class="btn btn-secondary">
+
+                Clear
+
+            </a>
+
+        </div>
+
+    </form>
+
+    <!-- Trek Table -->
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Available Slots</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for trek in treks %}
+
+            <tr>
+
+                <td>{{ trek.id }}</td>
+
+                <td>{{ trek.name }}</td>
+
+                <td>{{ trek.location }}</td>
+
+                <td>{{ trek.difficulty }}</td>
+
+                <td>{{ trek.duration_days }} Days</td>
+
+                <td>{{ trek.available_slots }}/{{ trek.total_slots }}</td>
+
+                <td>₹{{ trek.price }}</td>
+
+                <td>{{ trek.status }}</td>
+
+                <td>{{ trek.start_date.strftime('%d-%m-%Y') }}</td>
+
+                <td>
+
+                    <a href="{{ url_for('user.trek_details', trek_id=trek.id) }}"
+                       class="btn btn-primary btn-sm">
+
+                        View Details
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="10" class="text-center text-muted">
+
+                    No Treks Available.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

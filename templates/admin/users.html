@@ -2,73 +2,120 @@
 {% block content %}
 
 <div class="container mt-4">
+
     <h2>Manage Users</h2>
     <hr>
 
-    <!---- Search Users -->
+    <!-- Search Users -->
     <form method="GET" class="mb-3">
         <div class="input-group">
             <input type="text"
-               name="search"
-               class="form-control"
-               placeholder="Search User Name or Email"
-               value="{{ request.args.get('search', '') }}">
+                   name="search"
+                   class="form-control"
+                   placeholder="Search User Name or Email"
+                   value="{{ request.args.get('search', '') }}">
+
             <button class="btn btn-primary" type="submit">
-               Search
+                Search
             </button>
         </div>
     </form>
+
     <table class="table table-bordered table-striped">
-        <thead>
+
+        <thead class="table-dark">
+
             <tr>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th>Blacklist Status</th>
                 <th>Action</th>
             </tr>
+
         </thead>
 
         <tbody>
-            {% for user in users %}
+
+        {% for user in users %}
+
             <tr>
+
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
 
+                <td>{{ user.status }}</td>
+
                 <td>
                     {% if user.is_blacklisted %}
-                        Blocked
+                        <span class="badge bg-danger">
+                            Blocked
+                        </span>
                     {% else %}
-                        {{ user.status }}
+                        <span class="badge bg-success">
+                            Active
+                        </span>
                     {% endif %}
                 </td>
 
                 <td>
-                    {% if not user.is_blacklisted %}
+
+                    {% if user.is_blacklisted %}
+
+                    <form method="POST"
+                          action="{{ url_for('admin.unblock_user', user_id=user.id) }}"
+                          style="display:inline;">
+
+                        <button type="submit"
+                                class="btn btn-success btn-sm"
+                                onclick="return confirm('Unblock this user?');">
+
+                            Unblock
+
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
                     <form method="POST"
                           action="{{ url_for('admin.block_user', user_id=user.id) }}"
-                          style="display:inline">
+                          style="display:inline;">
 
-                        <button type="submit" class="btn btn-danger btn-sm">
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Block this user?');">
+
                             Block
+
                         </button>
+
                     </form>
-                    {% else %}
-                        Blocked
+
                     {% endif %}
+
                 </td>
+
             </tr>
 
-            {% else %}
+        {% else %}
+
             <tr>
-                <td colspan="5" class="text-center text-muted">
-                    No users found
+
+                <td colspan="6" class="text-center text-muted">
+                    No users found.
                 </td>
+
             </tr>
-            {% endfor %}
+
+        {% endfor %}
+
         </tbody>
+
     </table>
+
 </div>
 
 {% endblock %}

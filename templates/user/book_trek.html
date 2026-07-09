@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Book Trek</h2>
+
+    <hr>
+
+    <h4>{{ trek.name }}</h4>
+
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Location</th>
+            <td>{{ trek.location }}</td>
+        </tr>
+
+        <tr>
+            <th>Difficulty</th>
+            <td>{{ trek.difficulty }}</td>
+        </tr>
+
+        <tr>
+            <th>Duration</th>
+            <td>{{ trek.duration_days }} Days</td>
+        </tr>
+
+        <tr>
+            <th>Price Per Person</th>
+            <td>₹{{ trek.price }}</td>
+        </tr>
+
+        <tr>
+            <th>Available Slots</th>
+            <td>{{ trek.available_slots }}</td>
+        </tr>
+
+        <tr>
+            <th>Status</th>
+            <td>{{ trek.status }}</td>
+        </tr>
+
+    </table>
+
+    <hr>
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label class="form-label">
+
+                Number of Participants
+
+            </label>
+
+            <input
+                type="number"
+                name="participants"
+                min="1"
+                max="{{ trek.available_slots }}"
+                value="1"
+                required
+                class="form-control">
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success">
+
+            Confirm Booking
+
+        </button>
+
+        <a
+            href="{{ url_for('user.trek_details', trek_id=trek.id) }}"
+            class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

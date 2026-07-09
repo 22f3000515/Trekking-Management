@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>User Profile</h2>
+
+    <hr>
+    <!-- Profile Details -->
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Name</th>
+            <td>{{ user.name }}</td>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+
+        <tr>
+            <th>Phone</th>
+            <td>{{ user.phone }}</td>
+        </tr>
+
+        <tr>
+            <th>Role</th>
+            <td>{{ user.role|capitalize }}</td>
+        </tr>
+
+        <tr>
+            <th>Status</th>
+            <td>{{ user.status }}</td>
+        </tr>
+
+        <tr>
+            <th>Member Since</th>
+            <td>{{ user.created_at.strftime('%d-%m-%Y') }}</td>
+        </tr>
+
+    </table>
+
+    <!-- Buttons -->
+
+    <a href="{{ url_for('user.edit_profile') }}"
+       class="btn btn-primary">
+
+        Edit Profile
+
+    </a>
+
+    <a href="{{ url_for('user.dashboard') }}"
+       class="btn btn-secondary">
+
+        Back
+
+    </a>
+
+</div>
+
+{% endblock %}

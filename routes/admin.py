@@ -417,3 +417,63 @@ def unassign_staff(trek_id):
 
     flash("Staff unassigned successfully!", "success")
     return redirect(url_for('admin.manage_treks'))    
+
+# STEP 15: Unblacklist Staff
+
+@admin_bp.route('/unblacklist-staff/<int:staff_id>', methods=['POST'])
+def unblacklist_staff(staff_id):
+
+    # Check login
+    if 'user_id' not in session:
+        flash("Please login first", "danger")
+        return redirect(url_for('auth.login'))
+
+    # Check admin access
+    if session.get('role') != 'admin':
+        flash("Access denied", "danger")
+        return redirect(url_for('auth.login'))
+
+    # Get staff
+    staff = User.query.get_or_404(staff_id)
+
+    # Validate role
+    if staff.role != 'staff':
+        flash("Invalid staff", "danger")
+        return redirect(url_for('admin.manage_staff'))
+
+    # Unblacklist
+    staff.is_blacklisted = False
+    db.session.commit()
+
+    flash("Staff unblocked successfully!", "success")
+    return redirect(url_for('admin.manage_staff'))
+
+# STEP 16: Unblock User
+
+@admin_bp.route('/unblock-user/<int:user_id>', methods=['POST'])
+def unblock_user(user_id):
+
+    # Check login
+    if 'user_id' not in session:
+        flash("Please login first", "danger")
+        return redirect(url_for('auth.login'))
+
+    # Check admin access
+    if session.get('role') != 'admin':
+        flash("Access denied", "danger")
+        return redirect(url_for('auth.login'))
+
+    # Get user
+    user = User.query.get_or_404(user_id)
+
+    # Validate role
+    if user.role != 'user':
+        flash("Invalid user", "danger")
+        return redirect(url_for('admin.manage_users'))
+
+    # Unblock
+    user.is_blacklisted = False
+    db.session.commit()
+
+    flash("User unblocked successfully!", "success")
+    return redirect(url_for('admin.manage_users'))

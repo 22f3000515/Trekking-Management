@@ -62,31 +62,60 @@
                         <span class="badge bg-success">Approved</span>
                     {% endif %}
 
-                    <!-- Blacklist Button -->
-                    {% if not staff.is_blacklisted %}
-                    <form method="POST"
-                          action="{{ url_for('admin.blacklist_staff', staff_id=staff.id) }}"
-                          style="display:inline;">
-                        <button type="submit"
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Blacklist this staff?');">
-                            Blacklist
-                        </button>
-                    </form>
-                    {% endif %}
+                    <!-- Block / Unblock Button -->
 
+                    {% if staff.is_blacklisted %}
+
+                    <form method="POST"
+                        action="{{ url_for('admin.unblacklist_staff', staff_id=staff.id) }}"
+                        style="display:inline;">
+
+                        <button type="submit"
+                           class="btn btn-success btn-sm"
+                           onclick="return confirm('Unblock this staff?');">
+
+                              Unblock
+
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                    <form method="POST"
+                        action="{{ url_for('admin.blacklist_staff', staff_id=staff.id) }}"
+                        style="display:inline;">
+
+                        <button type="submit"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Blacklist this staff?');">
+
+                               Blacklist
+
+                        </button>
+
+                    </form>
+
+                    {% endif %}
                 </td>
+
             </tr>
 
             {% else %}
+
             <tr>
                 <td colspan="6" class="text-center text-muted">
                     No staff found.
                 </td>
             </tr>
+
             {% endfor %}
+
         </tbody>
+
     </table>
+
 </div>
 
 {% endblock %}
+

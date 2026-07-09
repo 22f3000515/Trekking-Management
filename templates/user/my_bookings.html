@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>My Bookings</h2>
+
+    <hr>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Booking ID</th>
+                <th>User Name</th>
+                <th>Trek</th>
+                <th>Location</th>
+                <th>Participants</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Booking Date</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for booking in bookings %}
+
+            <tr>
+
+                <td>{{ booking.id }}</td>
+
+                <td>{{ booking.user.name }}</td>
+
+                <td>{{ booking.trek.name }}</td>
+
+                <td>{{ booking.trek.location }}</td>
+
+                <td>{{ booking.participants_count }}</td>
+
+                <td>₹{{ booking.total_price }}</td>
+
+                <td>
+
+                    {% if booking.status == "Booked" %}
+
+                        <span class="badge bg-success">
+                            {{ booking.status }}
+                        </span>
+
+                    {% elif booking.status == "Cancelled" %}
+
+                        <span class="badge bg-danger">
+                            {{ booking.status }}
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-secondary">
+                            {{ booking.status }}
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+
+                <td>
+
+                    {% if booking.status == "Booked" %}
+
+                    <form method="POST"
+                          action="{{ url_for('user.cancel_booking', booking_id=booking.id) }}"
+                          style="display:inline;">
+
+                        <button type="submit"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure you want to cancel this booking?')">
+
+                            Cancel
+
+                        </button>
+
+                    </form>
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="9" class="text-center text-muted">
+
+                    No bookings yet.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="{{ url_for('user.dashboard') }}"
+       class="btn btn-secondary">
+
+        Back to Dashboard
+
+    </a>
+
+</div>
+
+{% endblock %}
