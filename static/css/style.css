@@ -1,0 +1,462 @@
+/* ===========================
+   TrekOra Global Styles
+=========================== */
+
+body{
+    background:#f4f7fb;
+    font-family:Arial, Helvetica, sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    color:#333;
+}
+
+.container{
+    max-width:1200px;
+}
+
+main{
+    flex:1;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+
+.navbar{
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.navbar-brand{
+    font-size:1.5rem;
+    font-weight:bold;
+    letter-spacing:.5px;
+}
+
+.nav-link{
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-link:hover{
+    color:#0dcaf0 !important;
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+footer{
+    margin-top:auto;
+    font-size:15px;
+}
+
+/* ===========================
+   Headings
+=========================== */
+
+h2{
+    font-weight:700;
+    color:#212529;
+}
+
+h4{
+    font-weight:600;
+}
+
+hr{
+    margin:20px 0;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card{
+    border:none;
+    border-radius:12px;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.card h2{
+    color:white;
+    font-weight:bold;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.btn{
+    border-radius:8px;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-success{
+    background:#198754;
+}
+
+.btn-primary{
+    background:#0d6efd;
+}
+
+.btn-danger{
+    background:#dc3545;
+}
+
+.btn-secondary{
+    background:#6c757d;
+}
+
+/* ===========================
+   Links
+=========================== */
+
+a{
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:none;
+}
+
+/* ===========================
+   Tables
+=========================== */
+
+.table{
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+.table thead{
+    background:#212529;
+    color:white;
+}
+
+.table th,
+.table td{
+    text-align:center;
+    vertical-align:middle;
+    white-space:normal;
+}
+.table td{
+    vertical-align:middle;
+    text-align:center;
+    white-space:normal;
+}
+
+.table tbody tr{
+    transition:.25s;
+}
+
+.table tbody tr:hover{
+    background:#f1f7ff;
+}
+
+/* ===========================
+   Responsive Table
+=========================== */
+
+.table-responsive{
+    overflow-x:auto;
+}
+
+/* ===========================
+   Forms
+=========================== */
+
+/* Only large forms will look like cards */
+.form-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.form-label{
+    font-weight:600;
+}
+
+.form-control,
+.form-select{
+    border-radius:8px;
+    transition:.25s;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 8px rgba(13,110,253,.2);
+}
+/* ===========================
+   Search Box
+=========================== */
+
+.input-group{
+    margin-bottom:10px;
+}
+
+.input-group .form-control{
+    border-radius:8px 0 0 8px;
+}
+
+.input-group .btn{
+    border-radius:0 8px 8px 0;
+}
+
+/* ===========================
+   Alerts
+=========================== */
+
+.alert{
+    border:none;
+    border-radius:10px;
+    box-shadow:0 3px 8px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   Badges
+=========================== */
+
+.badge{
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+/* ===========================
+   Dashboard Cards
+=========================== */
+
+.card-body h5{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.card-body h2{
+    font-size:38px;
+}
+
+/* ===========================
+   Dashboard Buttons
+=========================== */
+
+.w-100{
+    font-weight:600;
+}
+
+/* ===========================
+   Booking Status Colors
+=========================== */
+
+.text-success{
+    font-weight:bold;
+}
+
+.text-danger{
+    font-weight:bold;
+}
+
+.text-warning{
+    font-weight:bold;
+}
+
+/* ===========================
+   Images
+=========================== */
+
+img{
+    max-width:100%;
+    border-radius:10px;
+}
+
+/* ===========================
+   Small Utility
+=========================== */
+
+.shadow-sm{
+    box-shadow:0 2px 10px rgba(0,0,0,.08)!important;
+}
+
+.rounded{
+    border-radius:10px!important;
+}
+
+/* ===========================
+   Dashboard Cards
+=========================== */
+
+.card{
+    margin-bottom:20px;
+}
+
+.card-body{
+    padding:25px;
+}
+
+/* ===========================
+   Table Buttons
+=========================== */
+
+.table .btn{
+    margin:2px;
+}
+
+/* ===========================
+   Form Buttons
+=========================== */
+
+form .btn{
+    margin-top:8px;
+}
+
+/* ===========================
+   Login/Register Card
+=========================== */
+
+.login-card,
+.register-card{
+    max-width:500px;
+    margin:auto;
+}
+
+/* ===========================
+   Page Cards
+=========================== */
+
+.manage-treks-card{
+    background:#ffffff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   Hover Animation
+=========================== */
+
+.btn,
+.card,
+.table tbody tr{
+    transition:all .3s ease;
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f1f1f1;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#0d6efd;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#084298;
+}
+
+/* ===========================
+   Mobile Responsive
+=========================== */
+
+@media (max-width:991px){
+
+    .navbar-nav{
+        margin-top:15px;
+        text-align:center;
+    }
+
+    .navbar .btn{
+        width:100%;
+        margin-top:8px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    h2{
+        font-size:28px;
+    }
+
+    h4{
+        font-size:22px;
+    }
+
+    .card-body h2{
+        font-size:28px;
+    }
+
+    .card-body h5{
+        font-size:16px;
+    }
+
+    .btn{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    .table{
+        font-size:14px;
+    }
+
+    .container{
+        padding-left:15px;
+        padding-right:15px;
+    }
+
+}
+
+@media (max-width:576px){
+
+    h2{
+        font-size:24px;
+    }
+
+    h4{
+        font-size:20px;
+    }
+
+    .table{
+        font-size:13px;
+    }
+
+    footer{
+        font-size:13px;
+    }
+
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+footer{
+    width:100%;
+}
+
+footer p{
+    margin:0;
+}
+
+/* ===========================
+   End
+=========================== */

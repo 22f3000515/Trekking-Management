@@ -2,7 +2,7 @@
 {% block content %}
 
 <!-- STEP 1: Main Container -->
-<div class="container mt-4">
+<div class="container-xxl mt-5 manage-treks-card">
 
     <!-- STEP 2: Page Heading -->
     <h2>Manage Treks</h2>
@@ -11,7 +11,7 @@
     <!-- STEP 3: Add Trek Form -->
     <h4>Add New Trek</h4>
 
-    <form method="POST">
+    <form method="POST" class="form-card">
 
         <!-- Trek Name -->
         <input type="text" name="name" class="form-control mb-3"
@@ -88,7 +88,7 @@
 
     <hr class="my-5">
     <!-- STEP 17: Search Treks -->
-    <form method="GET" class="mb-3">
+    <form method="GET" class="form-card mb-3">
         <div class="input-group">
             <input type="text"
                name="search"
@@ -103,6 +103,7 @@
 
     <!-- STEP 4: Trek List -->
     <h4>All Treks</h4>
+    <div class="table-responsive">
 
     <table class="table table-bordered table-striped mt-3">
 
@@ -140,7 +141,7 @@
                 <td>{{ trek.status }}</td>
 
                 <!-- STEP 7: Assigned Staff -->
-                <td>
+                <td style="min-width:130px;">
                     {% if trek.assigned_staff %}
                         {{ trek.assigned_staff.name }}
                     {% else %}
@@ -148,7 +149,7 @@
                     {% endif %}
                 </td>
                  <!-- STEP 8: Assign Staff -->
-                <td>
+                <td style="min-width:220px;">
                    {% if trek.assigned_staff %}
 
                     <strong>{{ trek.assigned_staff.name }}</strong>
@@ -191,7 +192,7 @@
                     {% endif %}   
                 </td>     
                 <!-- STEP 9: Actions -->
-                <td>
+                <td style="min-width:130px;">
                     <a href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}"
                        class="btn btn-primary btn-sm">
                         Edit
@@ -220,6 +221,7 @@
 
         </tbody>
     </table>
+    </div>    
 
 </div>
 
